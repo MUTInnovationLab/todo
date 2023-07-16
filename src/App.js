@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { db } from './firebase';
+import { db, auth } from './firebase'; // Assuming you have 'auth' and 'db' imported from Firebase
 import {
   query,
   collection,
@@ -10,6 +10,7 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  where, // Import 'where' from 'firebase/firestore'
 } from 'firebase/firestore';
 
 const style = {
@@ -34,14 +35,19 @@ function App() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
-  // Create todo
   const createTodo = async (e) => {
     e.preventDefault();
     if (input === '') {
       alert('Please enter a valid todo');
       return;
     }
+    const user = auth.currentUser;
+    if (!user) {
+      alert('User not authenticated');
+      return;
+    }
     await addDoc(collection(db, 'todos'), {
+      email: user.email,
       text: input,
       description: description,
       date: date,
@@ -54,32 +60,42 @@ function App() {
     setTime('');
   };
 
-  // Read todo from firebase
   useEffect(() => {
-    const q = query(collection(db, 'todos'));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let todosArr = [];
-      querySnapshot.forEach((doc) => {
-        todosArr.push({ ...doc.data(), id: doc.id });
-      });
-      setTodos(todosArr);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const q = query(
+          collection(db, 'todos'),
+          where('email', '==', user.email)
+        );
+        const unsubscribeSnapshot = onSnapshot(q, (querySnapshot) => {
+          let todosArr = [];
+          querySnapshot.forEach((doc) => {
+            todosArr.push({ ...doc.data(), id: doc.id });
+          });
+          setTodos(todosArr);
+        });
+        return () => {
+          unsubscribeSnapshot();
+        };
+      } else {
+        setTodos([]);
+      }
     });
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
-  // Update todo in firebase
   const toggleComplete = async (todo) => {
     await updateDoc(doc(db, 'todos', todo.id), {
       completed: !todo.completed,
     });
   };
 
-  // Delete todo
   const deleteTodo = async (id) => {
     await deleteDoc(doc(db, 'todos', id));
   };
 
-  // Set reminder
   const setReminder = (todo) => {
     const reminderDate = new Date(todo.date + 'T' + todo.time);
     const currentDate = new Date();
@@ -132,9 +148,9 @@ function App() {
           </button>
         </form>
         <ul>
-          {todos.map((todo, index) => (
+          {todos.map((todo) => (
             <Todo
-              key={index}
+              key={todo.id}
               todo={todo}
               toggleComplete={toggleComplete}
               deleteTodo={deleteTodo}
@@ -162,9 +178,7 @@ const Todo = ({ todo, toggleComplete, deleteTodo, setReminder }) => {
         <div>
           <p
             onClick={() => toggleComplete(todo)}
-            className={
-              todo.completed ? style.textComplete : style.text
-            }
+            className={todo.completed ? style.textComplete : style.text}
           >
             {todo.text}
           </p>
