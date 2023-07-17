@@ -1,24 +1,21 @@
-import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
 import './SignIn.css';
-import {useNavigate } from 'react-router-dom';
-   
 
 const SignIn = () => {
-  
-const navigate =useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const signIn = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential);
-        alert("signed iN")
-      navigate("/App");
+        alert('Signed In');
+        navigate('/App');
       })
       .catch((error) => {
         console.log(error);
@@ -43,11 +40,12 @@ const navigate =useNavigate();
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="custom" type="submit">Log In</button>
+        <button className="custom" type="submit">
+          Log In
+        </button>
       </form>
       <p>
-        Don't have an account?{" "}
-        <Link to="/signup">Sign Up</Link>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );

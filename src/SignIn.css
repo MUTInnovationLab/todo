@@ -46,3 +46,8 @@ button.custom {
 button.custom:hover {
   background-color: #0056b3;
 }
+
+/* Updated code to change the background color to blue */
+.sign-in-container-custom {
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(26,34,116,1) 54%, rgba(45,101,253,1) 100%);
+}
