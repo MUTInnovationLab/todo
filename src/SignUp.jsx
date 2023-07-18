@@ -49,7 +49,7 @@ const SignUp = () => {
         </button>
       </form>
       <p>
-        Already have an account? <Link to="/">Sign In</Link>
+        Already have an account? <Link to="/"><b>Sign In</b></Link>
       </p>
     </div>
   );
