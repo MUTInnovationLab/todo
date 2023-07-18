@@ -27,6 +27,8 @@ const SignUp = () => {
   return (
     <div className="sign-up-container-custom">
       <form className="form-custom" onSubmit={signUp}>
+      <h1 className="custom"><b>Todo List</b></h1> {/* Add the Todo List title */}
+
         <h1 className="custom">Create Account</h1>
         <input
           type="email"

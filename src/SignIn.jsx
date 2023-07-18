@@ -25,6 +25,8 @@ const SignIn = () => {
   return (
     <div className="sign-in-container-custom">
       <form className="form-custom" onSubmit={signIn}>
+      <h1 className="custom"><b>Todo List</b></h1> {/* Add the Todo List title */}
+
         <h1 className="custom">Log In to Your Account</h1>
         <input
           className="custom"
