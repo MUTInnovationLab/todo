@@ -132,8 +132,6 @@ function App() {
     <div className={style.bg}>
       <div className={style.container}>
         <h3 className={style.heading}>Todo List</h3>
-        
-      
 
         <form onSubmit={createTodo} className={style.form}>
           <input
