@@ -16,7 +16,7 @@ const SignUp = () => {
       .then((userCredential) => {
         console.log(userCredential);
         alert('Signed Up');
-        navigate('/signin');
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +47,7 @@ const SignUp = () => {
         </button>
       </form>
       <p>
-        Already have an account? <Link to="/signin">Sign In</Link>
+        Already have an account? <Link to="/">Sign In</Link>
       </p>
     </div>
   );

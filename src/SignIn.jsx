@@ -15,7 +15,7 @@ const SignIn = () => {
       .then((userCredential) => {
         console.log(userCredential);
         alert('Signed In');
-        navigate('/App');
+        navigate('/app');
       })
       .catch((error) => {
         console.log(error);

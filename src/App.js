@@ -1,7 +1,9 @@
+// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { db, auth } from './firebase'; // Assuming you have 'auth' and 'db' imported from Firebase
+import { db, auth } from './firebase';
 import {
   query,
   collection,
@@ -10,16 +12,17 @@ import {
   doc,
   addDoc,
   deleteDoc,
-  where, // Import 'where' from 'firebase/firestore'
+  where,
 } from 'firebase/firestore';
 
+// CSS styles
 const style = {
   bg: `h-screen w-screen p-4 bg-gradient-to-r from-[#22c1c3] to-[#1a2274] via-[#2d65fd]`, 
   container: `bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-xl p-4`,
   heading: `text-3xl font-bold text-center text-gray-800 p-2`,
   form: `flex flex-col`,
   input: `border p-2 w-full text-xl`,
-  button: `border p-4 ml-2 bg-purple-500 text-slate-100`,
+  button: `border p-4 ml-2 bg-teal-600 text-slate-100`,
   count: `text-center p-2`,
   li: `flex justify-between bg-slate-200 p-4 my-2 capitalize`,
   liComplete: `flex justify-between bg-slate-400 p-4 my-2 capitalize`,
@@ -28,7 +31,10 @@ const style = {
   textComplete: `ml-2 cursor-pointer line-through`,
 };
 
+// App component
 function App() {
+  const navigate = useNavigate(); // Use the useNavigate hook
+
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
   const [description, setDescription] = useState('');
@@ -108,12 +114,27 @@ function App() {
         alert('It is time for: ' + todo.text);
       }, timeDifference);
     }
+
+    alert('Reminder set'); // Display "Reminder set" message as an alert
+  };
+
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <div className={style.bg}>
       <div className={style.container}>
-        <h3 className={style.heading}>Todo App</h3>
+        <h3 className={style.heading}>Todo List</h3>
+        
+      
+
         <form onSubmit={createTodo} className={style.form}>
           <input
             value={input}
@@ -147,6 +168,7 @@ function App() {
             <AiOutlinePlus size={30} />
           </button>
         </form>
+
         <ul>
           {todos.map((todo) => (
             <Todo
@@ -158,14 +180,20 @@ function App() {
             />
           ))}
         </ul>
+
         {todos.length < 1 ? null : (
           <p className={style.count}>{`You have ${todos.length} todos`}</p>
         )}
+          <button onClick={handleLogout} className={style.button}>
+          Logout
+        </button>
       </div>
     </div>
+    
   );
 }
 
+// Todo component
 const Todo = ({ todo, toggleComplete, deleteTodo, setReminder }) => {
   return (
     <li className={todo.completed ? style.liComplete : style.li}>
