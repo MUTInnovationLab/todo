@@ -239,7 +239,7 @@ function App() {
         </ul>
 
         {todos.length < 1 ? null : (
-          <p className={style.count}>{`You have ${todos.length} todos`}</p>
+          <p className={style.count}>{`You have ${todos.length} todo(s)`}</p>
         )}
         <button onClick={handleLogout} className={style.button}>
           Logout
