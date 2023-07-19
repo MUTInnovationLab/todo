@@ -180,7 +180,7 @@ function App() {
             onClick={() => handleVoiceRecognition('input')}
             disabled={isListening}
           >
-            <AiOutlineAudio size={15} />
+            <AiOutlineAudio size={14} />
           </button>
         </div>
 
@@ -198,7 +198,7 @@ function App() {
             onClick={() => handleVoiceRecognition('description')}
             disabled={isListening}
           >
-            <AiOutlineAudio size={15} />
+            <AiOutlineAudio size={14} />
           </button>
         </div>
 
