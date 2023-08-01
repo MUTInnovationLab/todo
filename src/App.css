@@ -3,6 +3,8 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    position: relative; /* Set the container as a reference for absolute positioning */
+    padding-bottom: 80px;
   }
   
   h1 {
@@ -70,4 +72,29 @@
   button:hover {
     background-color: #0056b3;
   }
+
+  .add-todo-link,
+.add-list-link {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px;
+  background-color: #2196F3;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.add-todo-link {
+  left: 20px;
+}
+
+.add-list-link {
+  right: 20px;
+}
+@media screen and (max-width: 600px) {
+    /* Adjust padding for small screens */
+    .app-container {
+      padding: 10px;
+    }
+}
   

@@ -6,7 +6,8 @@ import './index.css';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import App from './App'; // Add the import for the App component
-import AddTodo from './AddTodo'; // Add the import for the App component
+import AddTodo from './AddTodo'; 
+import AddList from './AddList'; 
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,8 @@ ReactDOM.render(
         <Route path="/signup" element={<SignUp />} />
         <Route path="/app" element={<App />} /> {/* Add a route for the App component */}
         <Route path="/addtodo" element={<AddTodo />} /> {/* Add a route for the App component */}
+        <Route path="/addlist" element={<AddList />} /> {/* Add a route for the App component */}
+
       </Routes>
     </Router>
   </React.StrictMode>,
